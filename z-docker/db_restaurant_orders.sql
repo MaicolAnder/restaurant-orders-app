@@ -54,6 +54,27 @@ ALTER TABLE `ordenes` ADD CONSTRAINT `fk_ordenes_estados_1` FOREIGN KEY (`id_est
 ALTER TABLE `recetas` ADD CONSTRAINT `fk_recetas_estados_1` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id_estado`);
 ALTER TABLE `solicitudes` ADD CONSTRAINT `fk_ingresos_ingredientes_1` FOREIGN KEY (`id_ingrediente`) REFERENCES `ingredientes` (`id_ingrediente`);
 
+DELIMITER $$
+CREATE TRIGGER descontar_bodega
+AFTER UPDATE ON `ordenes` FOR EACH ROW
+BEGIN
+	IF NEW.id_estado = 2 THEN
+		INSERT INTO solicitudes (cantidad, tipo_movimiento, id_ingrediente)
+		SELECT
+			ingredientes_receta.cantidad_requerida,
+			'Entrega',
+			ingredientes.id_ingrediente
+		FROM
+			ingredientes
+			INNER JOIN ingredientes_receta ON ingredientes.id_ingrediente = ingredientes_receta.id_ingrediente
+			INNER JOIN recetas ON ingredientes_receta.id_receta = recetas.id_receta
+			INNER JOIN ordenes ON recetas.id_receta = ordenes.id_receta
+		WHERE ordenes.id_orden = NEW.id_orden;
+	END IF;
+END;
+$$
+DELIMITER ;
+
 INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (1, 'Nueva orden', 'Orden nueva solicitada por el boton ');
 INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (2, 'En Preparación', 'Orden que está siendo preparada en cocina');
 INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (3, 'Entrgado', 'Orden preparada y entregada desde la cocina');

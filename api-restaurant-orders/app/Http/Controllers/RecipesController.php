@@ -31,10 +31,8 @@ class RecipesController extends Controller
     {
         try{
             $created = $this->recetas->create([
-                'id_plato'      => $request->input('id_plato'),
-                'id_estado'     => $request->input('id_estado'),
-                'fecha_orden'   => $request->input('fecha_orden'),
-                'fecha_entrega' => $request->input('fecha_entrega')
+                'nombre_receta' => $request->input('nombre_receta'),
+                'id_estado'     => $request->input('id_estado')
             ]);
             return ResponseAPI::success($created, 201, 'created');
         } catch(QueryException $e){
@@ -68,10 +66,8 @@ class RecipesController extends Controller
             $this->recetas
             ->where($this->recetas->getPK(), $id)
             ->update([
-                'id_plato'      => $request->input('id_plato'),
-                'id_estado'     => $request->input('id_estado'),
-                // 'fecha_orden'   => $request->input('fecha_orden'),
-                'fecha_entrega' => $request->input('fecha_entrega')
+                'nombre_receta' => $request->input('nombre_receta'),
+                'id_estado'     => $request->input('id_estado')
             ]);
             $recetas = $this->recetas->find($id);
             return ResponseAPI::success($recetas, 200, 'updated');

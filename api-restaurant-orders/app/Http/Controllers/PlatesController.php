@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Platos;
+use App\Models\IngredientesRecetas;
 use App\Traits\ResponseAPI;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\Http;
 class PlatesController extends Controller
 {
     private String      $api_status;
-    private Platos      $platos;
+    private IngredientesRecetas $ing_receta;
     private Response    $statusList;
 
-    public function __construct(Platos $platos)
+    public function __construct(IngredientesRecetas $ing_receta)
     {
-        $this->platos       = $platos;
+        $this->ing_receta   = $ing_receta;
         $this->statusList   = Http::get($_ENV['API_STATUS_URL']);
     }
 
     public function index()
     {   
-        $orders = $this->platos->all();
+        $orders = $this->ing_receta->all();
         return ResponseAPI::success($orders);
 
     }
@@ -39,7 +39,7 @@ class PlatesController extends Controller
         }
         
         try{
-            $created = $this->platos->create([
+            $created = $this->ing_receta->create([
                 'nombre_plato'  => $request->input('nombre_plato'),
                 'id_estado'     => $this->statusList->object()->data[0]->id_estado
             ]);
@@ -56,11 +56,11 @@ class PlatesController extends Controller
      */
     public function show(int $id)
     {
-        $platos = $this->platos->find($id);
-        if (!$platos) {
+        $ing_receta = $this->ing_receta->find($id);
+        if (!$ing_receta) {
             return ResponseAPI::fail("not_data_found", 400);
         }
-        return ResponseAPI::success($platos);
+        return ResponseAPI::success($ing_receta);
     }
 
     /**
@@ -76,14 +76,14 @@ class PlatesController extends Controller
         }
 
         try{
-            $this->platos
-            ->where($this->platos->getPK(), $id)
+            $this->ing_receta
+            ->where($this->ing_receta->getPK(), $id)
             ->update([
                 'nombre_plato'  => $request->input('nombre_plato'),
                 'id_estado'     => $request->input('id_estado'),
             ]);
-            $platos = $this->platos->find($id);
-            return ResponseAPI::success($platos, 200, 'updated');
+            $ing_receta = $this->ing_receta->find($id);
+            return ResponseAPI::success($ing_receta, 200, 'updated');
         } catch(QueryException $e){
             return ResponseAPI::fail($e->getMessage());
         }
@@ -98,9 +98,9 @@ class PlatesController extends Controller
     public function destroy($id)
     {
         try{
-            $platos = $this->platos->destroy($id);
-            if($platos){
-                return ResponseAPI::success($platos, 200, 'deleted');
+            $ing_receta = $this->ing_receta->destroy($id);
+            if($ing_receta){
+                return ResponseAPI::success($ing_receta, 200, 'deleted');
             } else {
                 return ResponseAPI::fail('not_data_found', 400);
             }
