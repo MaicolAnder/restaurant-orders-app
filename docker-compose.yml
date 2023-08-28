@@ -1,0 +1,78 @@
+version: "3"
+services:
+  server-api-status:
+    build:
+      context: .
+      dockerfile: /api-restaurant-status/Dockerfile
+    command: 'php artisan serve --host=0.0.0.0'
+    networks:
+      - internal
+    ports: 
+      - "8000:8000"
+    volumes:
+      - ./api-restaurant-status:/var/www/html
+      - ./api-restaurant-status/z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
+    depends_on:
+      - mysql_db
+    container_name: server-api-status
+
+  server-api-orders:
+    build:
+      context: .
+      dockerfile: /api-restaurant-orders/Dockerfile
+    command: 'php artisan serve --host=0.0.0.0'
+    networks:
+      - internal
+    ports: 
+      - "8001:8000"
+    volumes:
+      - ./api-restaurant-orders:/var/www/html
+      - ./z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
+    depends_on:
+      - mysql_db
+    container_name: server-api-orders
+
+  server-api-inventory:
+    build:
+      context: .
+      dockerfile: /api-restaurant-inventory/Dockerfile
+    command: 'php artisan serve --host=0.0.0.0'
+    networks:
+      - internal
+    ports: 
+      - "8002:8000"
+    volumes:
+      - ./api-restaurant-inventory:/var/www/html
+      - ./api-restaurant-inventory/z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
+    depends_on:
+      - mysql_db
+    container_name: server-api-inventory
+
+  mysql_db:
+    build: 
+      context: /z-docker
+      dockerfile: Dockerfile.db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_restaurant_orders
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9001:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - internal
+      
+networks:
+  internal:
+    driver: bridge
+volumes:
+  db_data:

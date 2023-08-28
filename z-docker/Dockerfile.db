@@ -1,0 +1,7 @@
+FROM mysql:latest
+
+# Copia un archivo de configuración personalizado (si es necesario)
+COPY db_restaurant_orders.sql /docker-entrypoint-initdb.d/
+
+# Expone el puerto de MySQL (por defecto: 3306)
+EXPOSE 3306
