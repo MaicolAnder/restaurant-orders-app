@@ -15,4 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('v1/ingredients', [\App\Http\Controllers\IngredientesController::class, 'index']);
+Route::get('v1/ingredients/{id_ingrediente}/show', [\App\Http\Controllers\IngredientesController::class, 'show']);
+Route::get('v1/ingredients/inventory', [\App\Http\Controllers\IngredientesController::class, 'showInventoryIngredients']);
+Route::get('v1/ingredients/inventory/{idIngredient}', [\App\Http\Controllers\IngredientesController::class, 'showInventoryIngredients']);
+Route::get('v1/ingredients/inventory/{idIngredient}/status/{idStatus}', [\App\Http\Controllers\IngredientesController::class, 'showInventoryIngredients']);
 
+Route::get('v1/ingredients/buy', [\App\Http\Controllers\RequestController::class, 'getBuysOnMarketplace']);
+Route::get('v1/ingredients/buy/{tipo_movimiento}', [\App\Http\Controllers\RequestController::class, 'getBuysOnMarketplace']);
+Route::post('v1/ingredients/buy/{ingredient}', [\App\Http\Controllers\RequestController::class, 'buyIngredient']);

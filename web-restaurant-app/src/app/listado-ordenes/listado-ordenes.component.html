@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div>
+        <h3 style="float: left;">Listado de Ordenes</h3>
+        <div style="float: right;">
+            <button (click)="getOrdersNew()" class="btn btn-outline-secondary">Pendientes</button>
+            &nbsp;<button (click)="getOrdersOnDeliveryStatus()" class="btn btn-outline-warning">Historico</button>
+            &nbsp;<button (click)="getOrdersOnPreparationStatus()" class="btn btn-outline-success">En Preparacion</button>
+            &nbsp;<button (click)="getAllOrders()" class="btn btn-outline-info">Todos</button>
+        </div>
+        <strong style="float: none;">[{{estado}}]</strong>
+    </div>
+    <div class="table">
+        <table class="table table-bordered table-striped table-hover table-condensed" width="100%">
+            <thead>
+                <th>#</th>
+                <th>Receta</th>
+                <th>Fecha orden</th>
+                <th>Estado</th>
+                <th>Fecha Entrega</th>
+                <th>Acción</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of orders">
+                    <td>{{ item.id_orden }}</td>
+                    <td>{{ item.desc_receta?.nombre_receta }}</td>
+                    <td>{{ item.fecha_orden | date }}</td>
+                    <td>{{ item.desc_estado?.estado }}</td>
+                    <td>{{ item.fecha_entrega | date }}</td>
+                    <td>
+                        <button *ngIf="item.id_estado == 1" (click)="takeOrder(item.id_orden)" class="btn btn-danger">Preparar</button>
+                        <button *ngIf="item.id_estado == 2" (click)="takeOrder(item.id_orden)" class="btn btn-success">Entregar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -6,6 +6,8 @@ use App\Models\Ingredientes;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use App\Traits\ResponseAPI;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class IngredientesController extends Controller
@@ -34,17 +36,36 @@ class IngredientesController extends Controller
         return ResponseAPI::success($orders);
     }
 
+    public function show(int $id){
+        $ingrediente = $this->ingredientes->find($id);
+        return ResponseAPI::success($ingrediente);
+
+    }
+
     /**
-     * Muestra todos los registros con detalle de inventario
+     * Muestra todos el inventario de cada ingrediente activo
      */
-    public function showIngredientsInventory()
+    public function showInventoryIngredients(int $idIngredient = null, int $idStatus = 4)
     {
-        $orders = $this->ingredientes->all();
-        foreach ($orders as $order) {
-            $order['estado'] = $this->findStatusById($order->id_estado);
-            unset($order->id_estado);
-        }
-        return ResponseAPI::success($orders);
+        $_arr = DB::table('solicitudes')
+                ->join('ingredientes', 'solicitudes.id_ingrediente', '=', 'ingredientes.id_ingrediente')
+                ->select(
+                    'ingredientes.id_ingrediente', 
+                    DB::raw('(SELECT ifnull(SUM(cantidad),0) FROM solicitudes WHERE tipo_movimiento = \'Compra\'  AND id_ingrediente = ingredientes.id_ingrediente) cant_compra'), 
+                    DB::raw('(SELECT ifnull(SUM(cantidad),0) FROM solicitudes WHERE tipo_movimiento = \'Entrega\' AND id_ingrediente = ingredientes.id_ingrediente) cant_entrega'),
+                    DB::raw('(SELECT ifnull(SUM(cantidad),0) FROM solicitudes WHERE tipo_movimiento = \'Compra\'  AND id_ingrediente = ingredientes.id_ingrediente) - (SELECT ifnull(SUM(cantidad),0) FROM solicitudes WHERE tipo_movimiento = \'Entrega\' AND id_ingrediente = ingredientes.id_ingrediente) cant_disponible'),
+                    'nombre_ingrediente')
+                ->where('ingredientes.id_estado', '=', $idStatus)
+                ->Where(function (Builder $query) use ($idIngredient) {
+                    if ($idIngredient == null) {
+                        $query->where(`'1'`, '=', `'1'`);
+                    } else {
+                        $query->where('ingredientes.id_ingrediente', '=', $idIngredient);
+                    }   
+                })
+                ->groupBy('ingredientes.id_ingrediente')
+                ->get();
+        return ResponseAPI::success($_arr);
     }
 
     /**

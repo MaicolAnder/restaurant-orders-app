@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div>
+        <h3 style="float: left;">Listado de Recetas</h3>
+        <small style="float: none;">[{{estado}}]</small>
+    </div>
+    <div class="table">
+        <table class="table table-bordered table-striped table-hover table-condensed" width="100%">
+            <thead>
+                <th>#</th>
+                <th>Receta</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of orders">
+                    <td>{{ item.id_receta }}</td>
+                    <td>{{ item.nombre_receta }}</td>
+                    <td>
+                        <button (click)="details(item.id_receta)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Detalle
+                          </button>                          
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Ingredientes {{receta}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body table">
+            <table class="table table-bordered table-striped table-hover table-condensed" width="100%">
+                <thead>
+                    <th>Ingrediente</th>
+                    <th>Cantidad</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of ingredients">
+                        <td>{{ i.nombre }}</td>
+                        <td>{{ i.cantidad_requerida }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

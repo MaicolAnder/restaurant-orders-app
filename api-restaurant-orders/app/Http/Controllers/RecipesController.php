@@ -2,25 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredientes;
+use App\Models\IngredientesRecetas;
 use App\Models\Recetas;
 use App\Traits\ResponseAPI;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Http;
 
 class RecipesController extends Controller
 {
-    private $recetas;
+    private Recetas $recetas;
+    private string  $url_inv;
+    private $listInventory;
 
     public function __construct(Recetas $recetas)
     {
         $this->recetas = $recetas;
+        $this->url_inv       = $_ENV['API_INVENTORY_URL'];
+
     }
 
     public function index()
     {
         $orders = $this->recetas->all();
         return ResponseAPI::success($orders);
+    }
 
+    public function recipesWithIngredientsDetail()
+    {
+        $this->listInventory = Http::get($this->url_inv);
+        $recipes = $this->recetas->all();
+        foreach ($recipes as $recipe) {
+            $recipe->ingredientes = IngredientesRecetas::where('id_receta', $recipe->id_receta)->get();
+            foreach ($recipe->ingredientes as $value) {
+                $value->nombre = $this->findIngredientById($value->id_ingrediente)->nombre_ingrediente;
+
+            }
+        }
+        return ResponseAPI::success($recipes);
     }
     /**
      * Almacene un recurso recién creado en el almacenamiento.
@@ -94,5 +114,14 @@ class RecipesController extends Controller
         } catch(QueryException $e){
             return ResponseAPI::fail($e->getMessage());
         }
+    }
+
+    public function findIngredientById(int $id) {
+        foreach ($this->listInventory->object()->data as $value) {
+            if($value->id_ingrediente == $id){
+                return $value;
+            }
+        }
+        return null;
     }
 }

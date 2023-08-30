@@ -14,14 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('v1/orders',         [\App\Http\Controllers\OrdenesController::class, 'index']);
-Route::post('v1/orders',        [\App\Http\Controllers\OrdenesController::class, 'store']);
-Route::delete('v1/orders/{id}', [\App\Http\Controllers\OrdenesController::class, 'destroy']);
-Route::get('v1/orders/new',     [\App\Http\Controllers\OrdenesController::class, 'newOrder']);
-Route::put('v1/orders/{id}/status',     [\App\Http\Controllers\OrdenesController::class, 'updateOrder']);
+Route::get('v1/orders',         [\App\Http\Controllers\OrdenesController::class, 'index']); // Listar orden
+Route::get('v1/orders/{id}',         [\App\Http\Controllers\OrdenesController::class, 'show']); // Obtiene order por id
+Route::get('v1/orders/status/{id}', [\App\Http\Controllers\OrdenesController::class, 'index']); // Listar orden
+Route::post('v1/orders',        [\App\Http\Controllers\OrdenesController::class, 'newOrder']); // Crear orden
+Route::put('v1/orders/{id}',    [\App\Http\Controllers\OrdenesController::class, 'update']); // Tomar orden
 
-
-
-Route::get('v1/plates',     [\App\Http\Controllers\PlatesController::class, 'index']);
-Route::post('v1/plates',    [\App\Http\Controllers\PlatesController::class, 'store']);
-Route::put('v1/plates',     [\App\Http\Controllers\PlatesController::class, 'update']);
+Route::get('v1/orders/recipes/ingredients', [\App\Http\Controllers\RecipesController::class, 'recipesWithIngredientsDetail']); // Listar orden

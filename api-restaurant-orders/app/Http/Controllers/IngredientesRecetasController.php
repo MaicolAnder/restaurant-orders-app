@@ -9,7 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-class PlatesController extends Controller
+class IngredientesRecetasController extends Controller
 {
     private String      $api_status;
     private IngredientesRecetas $ing_receta;

@@ -11,7 +11,7 @@ services:
       - "8000:8000"
     volumes:
       - ./api-restaurant-status:/var/www/html
-      - ./api-restaurant-status/z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
     depends_on:
       - mysql_db
     container_name: server-api-status
@@ -40,14 +40,24 @@ services:
     networks:
       - internal
     ports: 
-      - "8002:8000"
+      - "8003:8000"
     volumes:
       - ./api-restaurant-inventory:/var/www/html
-      - ./api-restaurant-inventory/z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
     depends_on:
       - mysql_db
     container_name: server-api-inventory
 
+  web-restaurant-app:
+    build: 
+      context: .
+      dockerfile: /web-restaurant-app/Dockerfile
+    networks:
+      - internal
+    ports: 
+      - "8002:80"
+    container_name: web-restaurant-app
+    
   mysql_db:
     build: 
       context: /z-docker

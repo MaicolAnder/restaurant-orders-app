@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div>
+        <h3 style="float: left;">Listado de ingredientes</h3>
+        <small style="float: none;">[{{estado}}]</small>
+    </div>
+    <div class="table">
+        <table class="table table-bordered table-striped table-hover table-condensed" width="100%">
+            <thead>
+                <th>Ingrediente</th>
+                <th>Unidades disponibles</th>
+                <th>Unidades compradas</th>
+                <th>Unidades pedidas</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of orders">
+                    <td>{{ item.nombre_ingrediente }}</td>
+                    <td>{{ item.cant_disponible }}</td>
+                    <td>{{ item.cant_compra  }}</td>
+                    <td>{{ item.cant_entrega }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

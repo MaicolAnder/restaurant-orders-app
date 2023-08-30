@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Restaurant Orders</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Restaurant Orders</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/crear-orden']" aria-current="page" href="#">Nueva Orden</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/listado-orden']" >Listado Ordenes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/listado-compras']" >Listado Compras</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/listado-recetas']" >Listado Recetas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/listado-ingredientes']" >Listado Ingredientes</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </body>
+</html>
