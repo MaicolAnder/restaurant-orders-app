@@ -12,13 +12,16 @@ docker-compose up
 ```
 
 ## APIS y Servicios
-DB Access         [phpMyAdmin]( http://localhost:9001)
+
+Angular Client    [phpMyAdmin]( http://localhost:80)
+
+Base de datos     [phpMyAdmin]( http://localhost:9001)
 
 API Estados       [http://localhost:8000]( http://localhost:8000)
 
 API Ordenes       [http://localhost:8001]( http://localhost:8001)
 
-API Inventarios   [http://localhost:8002]( http://localhost:8002)
+API Inventarios   [http://localhost:8002]( http://localhost:8003)
 
 
 ## Acceso a la base de datos
