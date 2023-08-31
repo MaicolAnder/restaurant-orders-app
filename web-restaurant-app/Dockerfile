@@ -1,11 +1,11 @@
 # Usar una imagen base de Node.js
-FROM node:14 as builder
+FROM node:latest as builder
 
 # Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
 # Copiar el archivo package.json y package-lock.json para instalar dependencias
-COPY package*.json ./
+COPY web-restaurant-app/package*.json ./
 
 # Instalar dependencias
 RUN npm install
@@ -20,7 +20,7 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copiar los archivos compilados de la aplicación Angular desde la etapa anterior
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist/web-restaurant-app /usr/share/nginx/html
 
 # Exponer el puerto 80 del contenedor
 EXPOSE 80

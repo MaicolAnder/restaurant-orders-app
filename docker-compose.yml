@@ -55,7 +55,11 @@ services:
     networks:
       - internal
     ports: 
-      - "8002:80"
+      - "80:80"
+    depends_on:
+      - server-restaurant-inventory
+      - serve-restaurant-orders
+      - serve-restaurant-status
     container_name: web-restaurant-app
     
   mysql_db:
