@@ -13,7 +13,7 @@ docker-compose up
 
 ## APIS y Servicios
 
-Angular Client    [phpMyAdmin]( http://localhost:80)
+Angular Client    [Aplicacion web]( http://localhost:80)
 
 Base de datos     [phpMyAdmin]( http://localhost:9001)
 
