@@ -1,7 +1,10 @@
-<div class="container-fluid">
+<div class="container">
+  <br>
     <div>
         <h3 style="float: left;">Listado de Recetas</h3>
-        <small style="float: none;">[{{estado}}]</small>
+    </div>
+    <div class="text-center">
+      <strong>[{{estado}}]</strong>
     </div>
     <div class="table">
         <table class="table table-bordered table-striped table-hover table-condensed" width="100%">
@@ -17,7 +20,7 @@
                     <td>
                         <button (click)="details(item.id_receta)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Detalle
-                          </button>                          
+                          </button>
                     </td>
                 </tr>
             </tbody>

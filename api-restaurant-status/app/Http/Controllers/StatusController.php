@@ -9,8 +9,9 @@ use Illuminate\Database\QueryException;
 
 class StatusController extends Controller
 {
-    private $estados;
+    use ResponseAPI;
 
+    private $estados;
     public function __construct(Estados $estados)
     {
         $this->estados = $estados;

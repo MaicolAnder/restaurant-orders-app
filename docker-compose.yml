@@ -2,15 +2,13 @@ version: "3"
 services:
   server-api-status:
     build:
-      context: .
-      dockerfile: /api-restaurant-status/Dockerfile
-    command: 'php artisan serve --host=0.0.0.0'
+      context: ./api-restaurant-status
+      dockerfile: Dockerfile
     networks:
       - internal
     ports: 
       - "8000:8000"
     volumes:
-      - ./api-restaurant-status:/var/www/html
       - ./z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
     depends_on:
       - mysql_db
@@ -18,15 +16,13 @@ services:
 
   server-api-orders:
     build:
-      context: .
-      dockerfile: /api-restaurant-orders/Dockerfile
-    command: 'php artisan serve --host=0.0.0.0'
+      context: ./api-restaurant-orders
+      dockerfile: Dockerfile
     networks:
       - internal
     ports: 
       - "8001:8000"
     volumes:
-      - ./api-restaurant-orders:/var/www/html
       - ./z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
     depends_on:
       - mysql_db
@@ -34,15 +30,13 @@ services:
 
   server-api-inventory:
     build:
-      context: .
-      dockerfile: /api-restaurant-inventory/Dockerfile
-    command: 'php artisan serve --host=0.0.0.0'
+      context: ./api-restaurant-inventory
+      dockerfile: Dockerfile
     networks:
       - internal
     ports: 
       - "8003:8000"
     volumes:
-      - ./api-restaurant-inventory:/var/www/html
       - ./z-docker/default.conf:/etc/apache2/sites-enabled/000-default.conf
     depends_on:
       - mysql_db
@@ -50,21 +44,21 @@ services:
 
   web-restaurant-app:
     build: 
-      context: .
-      dockerfile: /web-restaurant-app/Dockerfile
+      context: ./web-restaurant-app
+      dockerfile: Dockerfile
     networks:
       - internal
     ports: 
       - "80:80"
     depends_on:
-      - server-restaurant-inventory
-      - serve-restaurant-orders
-      - serve-restaurant-status
+      - server-api-inventory
+      - server-api-orders
+      - server-api-status
     container_name: web-restaurant-app
     
   mysql_db:
     build: 
-      context: /z-docker
+      context: ./z-docker
       dockerfile: Dockerfile.db
     environment:
       MYSQL_ROOT_PASSWORD: root

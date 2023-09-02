@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataServicesService } from '../shared/data-services.service';
 import { Order } from '../models/Order';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-listado-ordenes',
   templateUrl: './listado-ordenes.component.html',
   styleUrls: ['./listado-ordenes.component.css']
 })
-export class ListadoOrdenesComponent {
+export class ListadoOrdenesComponent implements OnInit {
   public orders: Array<Order> = [];
   public estado: string = 'Cargando datos ...';
 
   constructor(
     private services: DataServicesService
-  ){ 
+  ){ }
+
+  ngOnInit(): void {
     this.getOrdersOnPreparationStatus();
   }
-
   takeOrder(id: number | undefined){
     this.estado = 'Tomando Orden ...';
     this.services.takeOrder(id).subscribe({
@@ -28,6 +31,8 @@ export class ListadoOrdenesComponent {
         if(v.data.id_estado == 3){
           this.getOrdersOnPreparationStatus()
         }
+
+
       },
       error: (e) => console.error(e),
       complete: () => console.log('Complete'),
@@ -35,7 +40,7 @@ export class ListadoOrdenesComponent {
   }
 
   /**
-   * Get all Orders 
+   * Get all Orders
    */
   getAllOrders() {
     this.estado = 'Cargando datos ...';
@@ -46,14 +51,15 @@ export class ListadoOrdenesComponent {
         } else {
           console.error('Data is not in expected format');
         }
-        this.estado = 'Todas las ordenes'
+
+        this.estado = 'Todas las ordenes';
       },
       error: (e) => console.error(e),
       complete: () => console.info('complete')
     })
   }
 
-  getOrdersOnPreparationStatus() {    
+  getOrdersOnPreparationStatus() {
     this.estado = 'Cargando datos ...';
     this.services.getOrders(null, 2).subscribe({
       next: (v: any) => {
@@ -62,10 +68,13 @@ export class ListadoOrdenesComponent {
         } else {
           console.error('Data is not in expected format');
         }
-        this.estado = 'Ordenes en preparación'
+        this.estado = 'Ordenes en preparación';
       },
       error: (e) => console.error(e),
-      complete: () => console.info('complete')
+      complete: () => {
+        console.info('complete');
+
+      }
     })
   }
 
@@ -78,7 +87,8 @@ export class ListadoOrdenesComponent {
         } else {
           console.error('Data is not in expected format');
         }
-        this.estado = 'Histórico de ordenes'
+
+        this.estado = 'Histórico de ordenes';
       },
       error: (e) => console.error(e),
       complete: () => console.info('complete')
@@ -94,7 +104,8 @@ export class ListadoOrdenesComponent {
         } else {
           console.error('Data is not in expected format');
         }
-        this.estado = 'Ordenes pendientes'
+
+        this.estado = 'Ordenes pendientes';
       },
       error: (e) => console.error(e),
       complete: () => console.info('complete')

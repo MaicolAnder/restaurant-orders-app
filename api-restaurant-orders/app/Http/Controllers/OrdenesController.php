@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Http;
 
 class OrdenesController extends Controller
 {
+    use ResponseAPI;
+
     private IngredientesRecetas $ingrReceta;
     private Ordenes     $ordenes;
     private Response    $statusList;
@@ -104,7 +106,7 @@ class OrdenesController extends Controller
         if($orden){
             // Valida si estado pasa de 1 a 2 o de 2 a 3
             $respuesta = null;
-            $id_estado = (int) $orden->id_estado + 1;            
+            $id_estado = (int) $orden->id_estado + 1;
             switch ($id_estado) {
                 case 1:
                     $respuesta = ResponseAPI::fail("Orden no disponible para actualizar");
@@ -137,7 +139,7 @@ class OrdenesController extends Controller
         do {
             // Pedir ingredientes en bodega y validar existencia ingrediente de receta
             $ingredientesParaPedido = $this->validaInventarioReceta($orden->id_receta, $bodegaConIngredientes);
-            
+
             // Si no existe cantidad requerida, se compran los ingrediente en la plaza
             if(!$bodegaConIngredientes){
                 $this->solicitarIngredienteEnPlaza($ingredientesParaPedido);
@@ -154,7 +156,7 @@ class OrdenesController extends Controller
             return ResponseAPI::fail($e->getMessage());
         }
     }
-    
+
     private function deliverOrder(Ordenes $orden, int $id_estado) {
         try{
             $this->ordenes
@@ -186,7 +188,7 @@ class OrdenesController extends Controller
         // Obtener, validar y actualizar API con la cantidad de ingredientes de la receta
         $ingredientesReceta     = $this->getIngredienteByIdReceta($id_receta);
         $this->inventoryList    = Http::timeout(-1)->get($this->url_inv.'/inventory');
-        
+
         $bodegaConIngredientes  = true;
         $ingredientesParaPedido = [];
 
@@ -200,7 +202,7 @@ class OrdenesController extends Controller
         }
         return $ingredientesParaPedido;
     }
-    
+
     /**
      * Selecciona receta random
      * @param status int

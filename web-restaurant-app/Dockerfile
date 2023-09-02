@@ -5,13 +5,13 @@ FROM node:latest as builder
 WORKDIR /app
 
 # Copiar el archivo package.json y package-lock.json para instalar dependencias
-COPY web-restaurant-app/package*.json ./
+COPY ./package*.json ./
 
 # Instalar dependencias
 RUN npm install
 
 # Copiar el resto de los archivos de la aplicación
-COPY web-restaurant-app .
+COPY . .
 
 # Compilar la aplicación Angular
 RUN npm run build --prod

@@ -10,6 +10,7 @@ import { ListadoComprasComponent } from './listado-compras/listado-compras.compo
 import { ListadoOrdenesComponent } from './listado-ordenes/listado-ordenes.component';
 import { ListadoIngredientesComponent } from './listado-ingredientes/listado-ingredientes.component';
 import { ListadoRecetasComponent } from './listado-recetas/listado-recetas.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ListadoRecetasComponent } from './listado-recetas/listado-recetas.compo
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

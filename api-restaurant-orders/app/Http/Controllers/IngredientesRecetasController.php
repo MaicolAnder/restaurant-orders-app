@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Http;
 
 class IngredientesRecetasController extends Controller
 {
+    use ResponseAPI;
+
     private String      $api_status;
     private IngredientesRecetas $ing_receta;
     private Response    $statusList;
@@ -22,7 +24,7 @@ class IngredientesRecetasController extends Controller
     }
 
     public function index()
-    {   
+    {
         $orders = $this->ing_receta->all();
         return ResponseAPI::success($orders);
 
@@ -37,7 +39,7 @@ class IngredientesRecetasController extends Controller
         if($this->statusList->status() !== 200){
             return ResponseAPI::fail("List status not found");
         }
-        
+
         try{
             $created = $this->ing_receta->create([
                 'nombre_plato'  => $request->input('nombre_plato'),

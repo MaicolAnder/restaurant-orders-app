@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Http;
 
 class RecipesController extends Controller
 {
+    use ResponseAPI;
+
     private Recetas $recetas;
     private string  $url_inv;
     private $listInventory;

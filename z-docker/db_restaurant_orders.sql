@@ -75,10 +75,10 @@ END;
 $$
 DELIMITER ;
 
-INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (1, 'Nueva orden', 'Orden nueva solicitada por el boton ');
+INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (1, 'Nueva Orden', 'Orden nueva solicitada por el boton ');
 INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (2, 'En Preparación', 'Orden que está siendo preparada en cocina');
-INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (3, 'Entrgado', 'Orden preparada y entregada desde la cocina');
-INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (4, 'En bodega', 'Ingrediente activo en bodega');
+INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (3, 'Entregado', 'Orden preparada y entregada desde la cocina');
+INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (4, 'En Bodega', 'Ingrediente activo en bodega');
 INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (5, 'Inactivo', 'Estado inactivo');
 INSERT INTO `estados` (`id_estado`, `estado`, `descripcion`) VALUES (6, 'Activo', 'Estado activo');
 

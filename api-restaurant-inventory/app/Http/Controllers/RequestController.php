@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Http;
 
 class RequestController extends Controller
 {
+    use ResponseAPI;
+
     private Solicitudes $solicitudes;
     private string $url_marketplace;
 
@@ -36,12 +38,12 @@ class RequestController extends Controller
 
     public function buyIngredient(string $nombre_ingrediente) {
         $ingrediente = Ingredientes::where(['nombre_ingrediente' => $nombre_ingrediente, 'id_estado' => 4])->first();
-        
+
         if ($ingrediente) {
             $response = Http::get($this->url_marketplace, [
                 'ingredient' => strtolower($ingrediente->nombre_ingrediente)
             ]);
-            
+
             if($response->successful()){
                 $cantidad = $response->object()->quantitySold;
                 if($cantidad > 0){

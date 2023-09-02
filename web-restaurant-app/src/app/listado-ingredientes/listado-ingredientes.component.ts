@@ -7,18 +7,18 @@ import { DataServicesService } from '../shared/data-services.service';
   styleUrls: ['./listado-ingredientes.component.css']
 })
 export class ListadoIngredientesComponent {
-  
+
   public orders: Array<any> = [];
   public estado: string = 'Cargando datos ...';
 
   constructor(
     private services: DataServicesService
-  ){ 
+  ){
     this.getAll();
   }
 
   /**
-   * Get all Orders 
+   * Get all Orders
    */
   getAll() {
     this.estado = 'Cargando datos ...';
@@ -29,7 +29,7 @@ export class ListadoIngredientesComponent {
         } else {
           console.error('Data is not in expected format');
         }
-        this.estado = 'Todos las ingredientes'
+        this.estado = 'Todos los ingredientes'
       },
       error: (e) => console.error(e),
       complete: () => console.info('complete')
