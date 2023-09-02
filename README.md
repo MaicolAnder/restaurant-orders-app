@@ -1,7 +1,16 @@
 # Restaurant orders app
-Containerized microservices-based restaurant order request application
+Aplicación para solicitud de pedidos de restaurante basada en microservicios.
+La aplicación esta desarrollada en `Laravel`, manejando una arquitectura de `microservicios` y conectandose a una base de datos `MySQL`.
 
-## Docker options
+Todos los servicios estan contenerizados y orquestados con `docker`.
+
+
+## Clonar repositorio
+```
+git clone https://github.com/MaicolAnder/restaurant-orders-app.git
+```
+
+## Opciones para ejecutar Contenedores
 Iniciar contenedor con todos los servicios
 ```
 docker-compose up
