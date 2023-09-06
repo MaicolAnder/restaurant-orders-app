@@ -46,3 +46,8 @@ API Inventarios   [http://localhost:8002]( http://localhost:8003)
 
 > DB_PASSWORD=`root`
 >
+
+## Modelo de base de datos
+![Modelo base datos](https://github.com/MaicolAnder/restaurant-orders-app/blob/master/z-docker/Diagrama%20Alegra.png)
+
+Diseño relacional de la base de datos
